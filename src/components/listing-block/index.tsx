@@ -16,7 +16,7 @@ const ListingBlock: React.FC<ListingBlockProps> = ({
     return (
         <div className={`flex flex-col gap-4 border border-neutral-300 rounded-lg h-full w-full ${customClasses}`}>
 
-            <div className="flex flex-col gap-2 bg-neutral-50 p-3 border-b border-neutral-300">
+            <div className="flex flex-col gap-2 bg-neutral-50 p-3 border-b border-neutral-300 md:flex-row md:justify-between md:items-center">
                 <div className="relative w-full h-fit">
                     <Image
                         src={image}
@@ -26,11 +26,11 @@ const ListingBlock: React.FC<ListingBlockProps> = ({
                     />
                 </div>
 
-                <div>
-                    <h3 className="text-2xl font-semibold">{title}</h3>
+                <div className="md:w-80">
+                    <h3 className="text-2xl md:text-xl font-semibold">{title}</h3>
                     <div className="flex items-center space-x-2">
                         <span className="text-yellow-500 text-2xl">{"★".repeat(rating)}</span>
-                        <span className="text-neutral-800">by <strong>{reviewsCount} customers</strong></span>
+                        <span className="text-neutral-800 md:text-sm">by <strong>{reviewsCount} customers</strong></span>
                     </div>
                 </div>
             </div>
