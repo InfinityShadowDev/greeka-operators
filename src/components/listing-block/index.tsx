@@ -1,6 +1,6 @@
 import { IListingBlock } from "@/data";
 import { ArrowRightCircle } from "lucide-react";
-import Image from 'next/image'; // Make sure to import Image for handling images
+import Image from 'next/image';
 
 interface ListingBlockProps {
     listing: IListingBlock;
