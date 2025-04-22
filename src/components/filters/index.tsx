@@ -1,6 +1,6 @@
-const Filters: React.FC = () => {
+const Filters: React.FC<{ className?: string }> = ({ className }) => {
     return (
-        <div className="p-4 w-56">
+        <div className={`p-4 w-56 ${className}`}>
             <h3 className="text-sm font-semibold mb-3">Filters</h3>
             <div className="flex flex-col gap-2">
                 <label className="flex items-center gap-2">

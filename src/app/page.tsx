@@ -9,14 +9,14 @@ const Home = () => {
     <main className="p-6 space-y-5">
       {/* --- Header Text --- */}
       <div>
-        <h1 className="text-2xl font-bold">Ferry operators</h1>
-        <p className="text-sm">
+        <h1 className="text-2xl md:text-4xl font-bold">Ferry operators</h1>
+        <p className="text-sm md:text-base">
           Discover the <span className="font-semibold">57 ferry operators</span> we work with
         </p>
       </div>
 
       {/* --- Search Filters --- */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:max-w-lg">
         <DropDown
           trigger="Filters"
           icon={filter_icon}
@@ -35,16 +35,33 @@ const Home = () => {
         >
           <SortOptions />
         </DropDown>
+
+        <DropDown
+          trigger="Search"
+          icon={sort_icon}
+          menuIcon={false}
+          triggerClassName="w-full"
+          className="hidden md:block"
+        >
+          <SortOptions />
+        </DropDown>
       </div>
 
-      {/* --- Listings --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {operatorListings.map((listing, index) => (
-          <ListingBlock
-            key={index}
-            listing={listing}
-          />
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-[245px_1fr] gap-0">
+        <aside className="hidden md:flex top-20 h-max md:flex-col md:gap-2">
+          <Filters className="border border-neutral-300 rounded-lg" />
+          <Filters className="border border-neutral-300 rounded-lg" />
+        </aside>
+
+        {/* --- Listings --- */}
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+          {operatorListings.map((listing, index) => (
+            <ListingBlock
+              key={index}
+              listing={listing}
+            />
+          ))}
+        </div>
       </div>
     </main>
   );
