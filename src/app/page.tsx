@@ -1,11 +1,13 @@
 "use client";
 
-import { DropDown, Filters, SortOptions } from "@/components";
+import { DropDown, Filters, ListingBlock, SortOptions } from "@/components";
 import { filter_icon, sort_icon } from "./data";
+import { operatorListings } from "@/data";
 
 const Home = () => {
   return (
-    <div className="p-6 space-y-5">
+    <main className="p-6 space-y-5">
+      {/* --- Header Text --- */}
       <div>
         <h1 className="text-2xl font-bold">Ferry operators</h1>
         <p className="text-sm">
@@ -13,6 +15,7 @@ const Home = () => {
         </p>
       </div>
 
+      {/* --- Search Filters --- */}
       <div className="grid grid-cols-3 gap-3">
         <DropDown
           trigger="Filters"
@@ -33,7 +36,17 @@ const Home = () => {
           <SortOptions />
         </DropDown>
       </div>
-    </div>
+
+      {/* --- Listings --- */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {operatorListings.map((listing, index) => (
+          <ListingBlock
+            key={index}
+            listing={listing}
+          />
+        ))}
+      </div>
+    </main>
   );
 };
 
