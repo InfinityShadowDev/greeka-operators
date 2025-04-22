@@ -1,10 +1,9 @@
 import { StaticImageData } from "next/image";
-import { ElementType } from "react";
 
-export interface IDropdown {
+export interface DropDownProps {
     trigger: string;
-    icon: string | StaticImageData;
-    componentToRender: ElementType;
-    customTriggerClasses?: string;
-    customIconClasses?: string;
+    icon?: string | StaticImageData;
+    children: React.ReactNode;
+    className?: string;
+    triggerClassName?: string;
 }
