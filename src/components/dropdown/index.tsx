@@ -3,11 +3,13 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { DropDownProps } from "./data";
+import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
 const DropDown: React.FC<DropDownProps> = ({
     trigger,
     icon,
     children,
+    menuIcon = false,
     className = "",
     triggerClassName = "",
 }) => {
@@ -28,11 +30,17 @@ const DropDown: React.FC<DropDownProps> = ({
         <div className={`relative ${className}`} ref={ref}>
             <button
                 onClick={() => setOpen(!open)}
-                className={`border border-neutral-300 rounded-lg px-3 py-1 flex items-center gap-2 ${triggerClassName}`}
+                className={`border border-neutral-300 rounded-lg px-3 py-2 flex items-center gap-2 ${triggerClassName}`}
             >
                 {icon && <Image src={icon} alt="icon" width={14} height={14} />}
                 <span className="text-sm font-medium">{trigger}</span>
-                <span className="ml-auto">{open ? "▲" : "▼"}</span>
+
+                {menuIcon && (
+                    <span className="ml-auto">
+                        {open ? <ArrowUpIcon size={15} /> : <ArrowDownIcon size={15} />}
+                    </span>
+                )}
+
             </button>
 
             <div

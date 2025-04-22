@@ -5,7 +5,7 @@ import { filter_icon, sort_icon } from "./data";
 
 const Home = () => {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-5">
       <div>
         <h1 className="text-2xl font-bold">Ferry operators</h1>
         <p className="text-sm">
@@ -13,12 +13,23 @@ const Home = () => {
         </p>
       </div>
 
-      <div className="flex gap-3">
-        <DropDown trigger="Filters" icon={filter_icon}>
+      <div className="grid grid-cols-3 gap-3">
+        <DropDown
+          trigger="Filters"
+          icon={filter_icon}
+          menuIcon={false}
+          triggerClassName="w-full"
+        >
           <Filters />
         </DropDown>
 
-        <DropDown trigger="Sort by: Reviews" icon={sort_icon}>
+        <DropDown
+          trigger="Sort by: Reviews"
+          icon={sort_icon}
+          menuIcon={true}
+          className="col-span-2"
+          triggerClassName="w-full"
+        >
           <SortOptions />
         </DropDown>
       </div>
