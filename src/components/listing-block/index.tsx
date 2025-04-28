@@ -1,6 +1,7 @@
 import { IListingBlock } from "@/data";
 import { ArrowRightCircle } from "lucide-react";
 import Image from 'next/image';
+import ReactCountryFlag from "react-country-flag";
 
 interface ListingBlockProps {
     listing: IListingBlock;
@@ -11,7 +12,7 @@ const ListingBlock: React.FC<ListingBlockProps> = ({
     listing,
     customClasses = "",
 }) => {
-    const { image, title, rating, reviewsCount, description, ferryTypes, operatesIn, popularVessels, vessels, ctaText } = listing;
+    const { image, title, rating, reviewsCount, description, ferryTypes, operatesIn, countryCode, popularVessels, vessels, ctaText } = listing;
 
     return (
         <div className={`flex flex-col gap-4 border border-neutral-300 rounded-lg h-full w-full ${customClasses}`}>
@@ -36,31 +37,37 @@ const ListingBlock: React.FC<ListingBlockProps> = ({
             </div>
 
             <div className="px-4 flex flex-col gap-4">
-                <div>
-                    <h4 className="font-semibold">Operates in:</h4>
-                    <p className="text-gray-600">{operatesIn}</p>
-                    {/* To display flag use a npm flag library */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                    <div className="flex flex-col gap-4">
+                        <div>
+                            <h4 className="font-semibold">Operates in:</h4>
+                            <span className="text-gray-600 flex gap-2 items-center text-sm">
+                                <ReactCountryFlag countryCode={countryCode} svg />
+                                {operatesIn}
+                            </span>
+                        </div>
+
+                        <div>
+                            <h4 className="font-semibold">Ferry Types: <span className="font-normal">{ferryTypes}</span></h4>
+                            <h4 className="font-semibold">Vessels number: <span className="font-normal">{vessels}</span></h4>
+                        </div>
+
+                        <div>
+                            <h4 className="font-semibold">Popular Vessels:</h4>
+                            <ul className="flex text-blue-500 text-md">
+                                {popularVessels.map((vessel, index) => (
+                                    <li key={index} className="mr-2">
+                                        {vessel}{index < popularVessels.length - 1 ? ", " : ""}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p className="text-gray-700">{description.length > 425 ? description.slice(0, 425) + "..." : description}</p>
                 </div>
 
-                <div>
-                    <h4 className="font-semibold">Ferry Types: <span className="font-normal">{ferryTypes}</span></h4>
-                    <h4 className="font-semibold">Vessels number: <span className="font-normal">{vessels}</span></h4>
-                </div>
-
-                <div>
-                    <h4 className="font-semibold">Popular Vessels:</h4>
-                    <ul className="flex text-blue-500">
-                        {popularVessels.map((vessel, index) => (
-                            <li key={index} className="mr-2">
-                                {vessel}{index < popularVessels.length - 1 ? ", " : ""}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <p className="text-gray-700">{description}</p>
-
-                <button className="flex justify-end py-4 mt-4 gap-2 font-semibold w-full bg-transparent text-blue-500 border-t border-neutral-300">
+                <button className="cursor-pointer flex justify-end py-4 mt-4 gap-2 font-semibold w-full bg-transparent text-blue-500 border-t border-neutral-300">
                     {ctaText} <ArrowRightCircle />
                 </button>
             </div>

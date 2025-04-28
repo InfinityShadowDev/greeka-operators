@@ -10,6 +10,7 @@ const DropDown: React.FC<DropDownProps> = ({
     icon,
     children,
     menuIcon = false,
+    onClick,
     className = "",
     triggerClassName = "",
 }) => {
@@ -29,7 +30,7 @@ const DropDown: React.FC<DropDownProps> = ({
     return (
         <div className={`relative ${className}`} ref={ref}>
             <button
-                onClick={() => setOpen(!open)}
+                onClick={onClick ? onClick : () => setOpen(!open)}
                 className={`border border-neutral-300 rounded-lg px-3 py-2 flex items-center gap-2 ${triggerClassName}`}
             >
                 {icon && <Image src={icon} alt="icon" width={14} height={14} />}

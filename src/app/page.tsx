@@ -3,8 +3,17 @@
 import { DropDown, Filters, ListingBlock, SortOptions } from "@/components";
 import { filter_icon, sort_icon } from "./data";
 import { operatorListings } from "@/data";
+import { useState } from "react";
+import { useIsMobile } from "@/hooks/useMobile";
 
 const Home = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const isMobile = useIsMobile();
+
+  const toggleFilters = () => {
+    setIsOpen((prev) => !prev)
+  };
+
   return (
     <main className="p-6 space-y-5">
       {/* --- Header Text --- */}
@@ -21,6 +30,7 @@ const Home = () => {
           trigger="Filters"
           icon={filter_icon}
           menuIcon={false}
+          onClick={!isMobile ? () => toggleFilters() : undefined}
           triggerClassName="w-full"
         >
           <Filters />
@@ -47,10 +57,12 @@ const Home = () => {
         </DropDown>
       </div>
 
+      {/* --- Sidebar --- */}
       <div className="grid grid-cols-1 md:grid-cols-[245px_1fr] gap-0">
         <aside className="hidden md:flex top-20 h-max md:flex-col md:gap-2">
-          <Filters className="border border-neutral-300 rounded-lg" />
-          <Filters className="border border-neutral-300 rounded-lg" />
+          {isOpen && (
+            <Filters className="border border-neutral-300 rounded-lg" />
+          )}
         </aside>
 
         {/* --- Listings --- */}
