@@ -2,12 +2,13 @@
 
 import { DropDown, Filters, ListingBlock, SortOptions } from "@/components";
 import { filter_icon, sort_icon } from "./data";
-import { operatorListings } from "@/data";
+import { IListingBlock, operatorListings } from "@/data";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/useMobile";
 
 const Home = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [filterItems, setFilterItems] = useState<IListingBlock[]>(operatorListings);
   const isMobile = useIsMobile();
 
   const toggleFilters = () => {
@@ -33,7 +34,7 @@ const Home = () => {
           onClick={!isMobile ? () => toggleFilters() : undefined}
           triggerClassName="w-full"
         >
-          <Filters />
+          <Filters setFilterItems={setFilterItems} />
         </DropDown>
 
         <DropDown
@@ -64,13 +65,14 @@ const Home = () => {
             <Filters
               className="border border-neutral-300 rounded-lg"
               onClick={() => toggleFilters()}
+              setFilterItems={setFilterItems}
             />
           )}
         </aside>
 
         {/* --- Listings --- */}
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-          {operatorListings.map((listing, index) => (
+          {filterItems.map((listing, index) => (
             <ListingBlock
               key={index}
               listing={listing}

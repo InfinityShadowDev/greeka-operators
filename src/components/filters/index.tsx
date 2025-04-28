@@ -1,23 +1,43 @@
-import { operatorListings } from "@/data";
+import { IListingBlock, operatorListings } from "@/data";
 import { LucideLocationEdit, X } from "lucide-react";
 import { useState } from "react";
 
-const Filters: React.FC<{ className?: string, onClick?: () => void }> = ({ className, onClick }) => {
+const Filters: React.FC<{ className?: string, onClick?: () => void, setFilterItems: React.Dispatch<React.SetStateAction<IListingBlock[]>> }> = ({ className, onClick, setFilterItems }) => {
     const [ferryTypes, setFerryTypes] = useState<{ [key: string]: boolean }>({
         normal: false,
         highSpeed: false,
     });
+    const [selectedCountry, setSelectedCountry] = useState<string>("");
 
     const toggleFerryType = (type: string) => {
-        setFerryTypes((prev) => ({
-            ...prev,
-            [type]: !prev[type],
-        }));
+        const updatedFerryTypes = { ...ferryTypes, [type]: !ferryTypes[type] };
+        setFerryTypes(updatedFerryTypes);
+
+        filterListings(updatedFerryTypes, selectedCountry);
+    };
+
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const country = e.target.value;
+        setSelectedCountry(country);
+        filterListings(ferryTypes, country);
+    };
+
+    const filterListings = (ferryTypes: { [key: string]: boolean }, country: string) => {
+        const filtered = operatorListings.filter((listing) => {
+            const matchesCountry = country ? listing.operatesIn === country : true;
+            const matchesFerryTypes =
+                (ferryTypes.normal && listing.ferryTypes.includes("normal")) ||
+                (ferryTypes.highSpeed && listing.ferryTypes.includes("highSpeed")) ||
+                (!ferryTypes.normal && !ferryTypes.highSpeed);
+            return matchesCountry && matchesFerryTypes;
+        });
+
+        setFilterItems(filtered);
     };
 
     return (
-        <div className={`p-4 w-full border rounded-md ${className}`}>
-            <div className="flex items-center justify-between mb-4">
+        <div className={`p-4 w-full border border-neutral-200 rounded-md ${className}`}>
+            <div className="items-center justify-between mb-4 hidden md:flex">
                 <h3 className="text-base font-semibold">Filters</h3>
                 <button
                     className="text-xl font-bold"
@@ -40,10 +60,12 @@ const Filters: React.FC<{ className?: string, onClick?: () => void }> = ({ class
                         id="country"
                         name="country"
                         className="w-full border border-gray-300 rounded pl-10 pr-3 py-2 text-sm text-gray-700 appearance-none"
+                        value={selectedCountry}
+                        onChange={handleCountryChange}
                     >
                         <option value="">Select a country</option>
                         {operatorListings.map((listing) => (
-                            <option key={listing.countryCode} value={listing.countryCode}>
+                            <option key={listing.countryCode} value={listing.operatesIn}>
                                 {listing.operatesIn}
                             </option>
                         ))}

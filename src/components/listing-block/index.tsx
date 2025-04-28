@@ -54,13 +54,13 @@ const ListingBlock: React.FC<ListingBlockProps> = ({
 
                         <div>
                             <h4 className="font-semibold">Popular Vessels:</h4>
-                            <ul className="flex text-blue-500 text-md">
+                            <div className="flex justify-start items-center text-blue-500 md:text-md flex-wrap">
                                 {popularVessels.map((vessel, index) => (
-                                    <li key={index} className="mr-2">
+                                    <h1 key={index} className="mr-1">
                                         {vessel}{index < popularVessels.length - 1 ? ", " : ""}
-                                    </li>
+                                    </h1>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
                     </div>
 
