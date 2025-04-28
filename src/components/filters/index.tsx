@@ -1,19 +1,78 @@
-const Filters: React.FC<{ className?: string }> = ({ className }) => {
+import { operatorListings } from "@/data";
+import { LucideLocationEdit, X } from "lucide-react";
+import { useState } from "react";
+
+const Filters: React.FC<{ className?: string, onClick?: () => void }> = ({ className, onClick }) => {
+    const [ferryTypes, setFerryTypes] = useState<{ [key: string]: boolean }>({
+        normal: false,
+        highSpeed: false,
+    });
+
+    const toggleFerryType = (type: string) => {
+        setFerryTypes((prev) => ({
+            ...prev,
+            [type]: !prev[type],
+        }));
+    };
+
     return (
-        <div className={`p-4 w-56 ${className}`}>
-            <h3 className="text-sm font-semibold mb-3">Filters</h3>
+        <div className={`p-4 w-full border rounded-md ${className}`}>
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-base font-semibold">Filters</h3>
+                <button
+                    className="text-xl font-bold"
+                    onClick={onClick}
+                >
+                    <X className="w-4 h-auto" />
+                </button>
+            </div>
+
+            {/* --- Operating In --- */}
+            <div className="relative flex flex-col gap-2 mb-6">
+                <label htmlFor="country" className="text-sm font-medium flex items-center gap-2">
+                    Operating in
+                </label>
+
+                <div className="relative">
+                    <LucideLocationEdit className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" />
+
+                    <select
+                        id="country"
+                        name="country"
+                        className="w-full border border-gray-300 rounded pl-10 pr-3 py-2 text-sm text-gray-700 appearance-none"
+                    >
+                        <option value="">Select a country</option>
+                        {operatorListings.map((listing) => (
+                            <option key={listing.countryCode} value={listing.countryCode}>
+                                {listing.operatesIn}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            {/* --- Ferry Types --- */}
             <div className="flex flex-col gap-2">
-                <label className="flex items-center gap-2">
-                    <input type="checkbox" />
-                    <span className="text-sm">Eco Friendly</span>
+                <h4 className="text-sm font-semibold mb-2">Ferry types</h4>
+
+                <label className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                        type="checkbox"
+                        checked={ferryTypes.normal}
+                        onChange={() => toggleFerryType("normal")}
+                        className="w-4 h-4"
+                    />
+                    Normal ferries
                 </label>
-                <label className="flex items-center gap-2">
-                    <input type="checkbox" />
-                    <span className="text-sm">Wi-Fi Onboard</span>
-                </label>
-                <label className="flex items-center gap-2">
-                    <input type="checkbox" />
-                    <span className="text-sm">Pet Friendly</span>
+
+                <label className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                        type="checkbox"
+                        checked={ferryTypes.highSpeed}
+                        onChange={() => toggleFerryType("highSpeed")}
+                        className="w-4 h-4"
+                    />
+                    High-speed ferries
                 </label>
             </div>
         </div>

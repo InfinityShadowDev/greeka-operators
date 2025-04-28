@@ -59,9 +59,12 @@ const Home = () => {
 
       {/* --- Sidebar --- */}
       <div className="grid grid-cols-1 md:grid-cols-[245px_1fr] gap-0">
-        <aside className="hidden md:flex top-20 h-max md:flex-col md:gap-2">
+        <aside className="hidden md:flex top-20 h-max md:flex-col md:gap-2 mr-3">
           {isOpen && (
-            <Filters className="border border-neutral-300 rounded-lg" />
+            <Filters
+              className="border border-neutral-300 rounded-lg"
+              onClick={() => toggleFilters()}
+            />
           )}
         </aside>
 

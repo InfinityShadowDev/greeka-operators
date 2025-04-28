@@ -27,7 +27,7 @@ const ListingBlock: React.FC<ListingBlockProps> = ({
                     />
                 </div>
 
-                <div className="md:w-80">
+                <div className="md:w-80 flex flex-col md:justify-end md:items-end">
                     <h3 className="text-2xl md:text-xl font-semibold">{title}</h3>
                     <div className="flex items-center space-x-2">
                         <span className="text-yellow-500 text-2xl">{"★".repeat(rating)}</span>
@@ -41,7 +41,7 @@ const ListingBlock: React.FC<ListingBlockProps> = ({
                     <div className="flex flex-col gap-4">
                         <div>
                             <h4 className="font-semibold">Operates in:</h4>
-                            <span className="text-gray-600 flex gap-2 items-center text-sm">
+                            <span className="text-gray-600 flex gap-2 items-center justify-start text-md">
                                 <ReactCountryFlag countryCode={countryCode} svg />
                                 {operatesIn}
                             </span>
